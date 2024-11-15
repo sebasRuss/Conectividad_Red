@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val infoRed = objetoConectorManager.activeNetwork
 
             //usando un condicional podremos saber si la el dispositivo esta conectado ala red
-            val situacion : String = (if (infoRed != null){
+            val situacion= (if (infoRed != null){
                 //si hemos entrado en este condicional significa que estamos conectados a una red
                 //vamos a ver si es al wifi o a los datos
                 //DEBO USAR getNetworkCapabilities(aqui va la info de la red) PORQUE TYPE_WIFE
@@ -44,23 +44,17 @@ class MainActivity : AppCompatActivity() {
                 //sabremos si es wifi o red movil
                 objetoConectorManager.getNetworkCapabilities(infoRed)?.run{
                     //si entra en este condicinal la conexion es por wifi
-
                     if (hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
                         estadoConexion.setText("Dispositivo conectado a la red Wifi")
                     }
-
+                    //si entra por este condicional es que el movil esta usando los datos moviles
+                    if(hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)){
+                        estadoConexion.setText("Dispositivo conectado a los datos")
+                    }
                 }
             } else {
-
-            }).toString()
-
-
-            //en esta variable vamos a guarda un numero que correspondera al tipo de conexion en el momento
-            val estadoConexion : Int = intent.getIntExtra ("estado", -1)
-
-            //aqui tengo que recibir ese numero correspondiente a la conexion para introducirlo dentro
-            //de un switch y asignarle el tipo de conexion
-            //"Conectado a Wi-Fi", "Conectado a Datos Móviles", "Sin Conexión"
+                estadoConexion.setText("El dispositivo no esta conectado a ninguna red")
+            })
 
         }
     }
