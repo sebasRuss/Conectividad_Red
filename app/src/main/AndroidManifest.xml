@@ -22,8 +22,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"
-                tools:ignore="WrongManifestParent" />
+
         </activity>
     </application>
 
