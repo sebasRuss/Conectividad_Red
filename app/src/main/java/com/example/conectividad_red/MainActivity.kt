@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     //si entra por este condicional es que el movil esta usando los datos moviles
                     if(hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)){
-                        textoEstado.setTextColor(Color.GREEN)
+                        textoEstado.setTextColor(Color.RED)
                         textoEstado.text ="Dispositivo conectado a los datos"
                     }
                 }
@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
         //IntentFilter sirve para espeficar el tipo de eventos a los que tiene que estar
         //pendiendte, en este caso, a los cambios de red.
         //ACTION_MANAGE_NETWORK_USAGE es el intent relacionado con la red en general
-        registerReceiver(conexionReceiver, IntentFilter(Intent.ACTION_MANAGE_NETWORK_USAGE),
-            RECEIVER_NOT_EXPORTED
+        registerReceiver(conexionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+
         )
     }
 
