@@ -71,14 +71,11 @@ class MainActivity : AppCompatActivity() {
 
         textoEstado = findViewById(R.id.textViewEstadoConexion)
 
-
-
-
         //Hay que REGISTRAR el BroadcastReceiver para que este atento a los cambios
         //solo de conectividad.
         //IntentFilter sirve para espeficar el tipo de eventos a los que tiene que estar
         //pendiendte, en este caso, a los cambios de red.
-        //ACTION_MANAGE_NETWORK_USAGE es el intent relacionado con la red en general
+        //CONNECTIVITY_ACTIO es el intent relacionado con la red en general
         registerReceiver(conexionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
 
         )
