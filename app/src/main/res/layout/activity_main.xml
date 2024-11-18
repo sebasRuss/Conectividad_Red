@@ -12,7 +12,7 @@
         android:id="@+id/textViewEstadoConexion"
         android:layout_width="199dp"
         android:layout_height="58dp"
-        android:text=""
+        android:text="@string/estado_de_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.405"

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Conectividad_Red</string>
+    <string name="estado_de_red">Estado de Red</string>
 </resources>
