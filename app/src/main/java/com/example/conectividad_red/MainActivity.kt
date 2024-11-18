@@ -20,14 +20,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textoEstado: TextView
 
     //Creamos el broadcast
-    private val conexionReceiver = object : BroadcastReceiver() {
+    val conexionReceiver = object : BroadcastReceiver() {
         /**
          * Le pasaremos el contexto y el intent para transmitir la informacion
          */
         @SuppressLint("SetTextI18n")
         override fun onReceive(context: Context, intent: Intent) {
-
-
             //creamos el singleton
             //aqui recibiremos un objeto pero lo casteamos para que sea concretamente un objeto tipo ConnectivityManager
             //objetoConectorManager guardara el servicio del sistema que gestiona la conectividad a la red
@@ -37,8 +35,9 @@ class MainActivity : AppCompatActivity() {
             //luego cotejarla
             val informacionRed = objetoConectorManager.activeNetwork
 
+            textoEstado = findViewById(R.id.textViewEstadoConexion)
             //usando un condicional podremos saber si la el dispositivo esta conectado ala red
-            val situacion = (if (informacionRed != null){
+            if (informacionRed != null){
                 //si hemos entrado en este condicional significa que estamos conectados a una red
                 //vamos a ver si es al wifi o a los datos
                 //DEBO USAR getNetworkCapabilities(aqui va la info de la red) PORQUE TYPE_WIFE
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 textoEstado.text= "El dispositivo no esta conectado a ninguna red"
-            })
+            }
 
         }
     }
@@ -69,8 +68,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         textoEstado = findViewById(R.id.textViewEstadoConexion)
+
+
+
 
         //Hay que REGISTRAR el BroadcastReceiver para que este atento a los cambios
         //solo de conectividad.
@@ -94,6 +95,6 @@ class MainActivity : AppCompatActivity() {
         unregisterReceiver(conexionReceiver)
     }
 
-
 }
+
 
