@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.conectividad_red"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.conectividad_red"

@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -45,10 +49,12 @@ class MainActivity : AppCompatActivity() {
                 objetoConectorManager.getNetworkCapabilities(infoRed)?.run{
                     //si entra en este condicinal la conexion es por wifi
                     if (hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
+                        estadoConexion.setTextColor(Color.BLUE)
                         estadoConexion.setText("Dispositivo conectado a la red Wifi")
                     }
                     //si entra por este condicional es que el movil esta usando los datos moviles
                     if(hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)){
+                        estadoConexion.setTextColor(Color.GREEN)
                         estadoConexion.setText("Dispositivo conectado a los datos")
                     }
                 }
@@ -59,8 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -72,5 +77,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         estadoConexion = findViewById(R.id.textViewEstadoConexion)
+
+        //Hay que REGISTRAR el BroadcastReceiver para que este atento a los cambios
+        //solo de conectividad.
+        //IntentFilter sirve para espeficar el tipo de eventos a los que tiene que estar
+        //pendiendte, en este caso, a los cambios de red.
+        //ACTION_MANAGE_NETWORK_USAGE es el intent relacionado con la red en general
+        registerReceiver(tipoConexion, IntentFilter(Intent.ACTION_MANAGE_NETWORK_USAGE),
+            RECEIVER_NOT_EXPORTED
+        )
     }
+
+    /**
+     * Funcion sobreescrita que finalizara las notificaciones del sistema
+     * en cuanto al estado de red
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        //Tenemos que anular el REGISTRO del BroadcastReceiver
+        //Esto se hace para decirl al sistema que ya no necesitamos mas notificaciones
+        //sobre el estado de red
+        unregisterReceiver(tipoConexion)
+    }
+
+
 }
+
