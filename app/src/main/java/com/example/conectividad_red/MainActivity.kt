@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else {
+                textoEstado.setTextColor(Color.BLACK)
                 textoEstado.text= "El dispositivo no esta conectado a ninguna red"
             }
 
